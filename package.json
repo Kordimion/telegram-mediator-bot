@@ -1,0 +1,24 @@
+{
+  "name": "serverless_telegram_bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "local": "sls offline start",
+    "deploy": "sls deploy",
+    "logs": "sls logs --function processWebhook -t"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "node-telegram-bot-api": "^0.51.0",
+    "serverless-dir-config-plugin": "^0.1.5"
+  },
+  "devDependencies": {
+    "serverless": "^2.25.2",
+    "serverless-dotenv-plugin": "^3.5.1",
+    "serverless-offline": "^6.8.0"
+  }
+}
