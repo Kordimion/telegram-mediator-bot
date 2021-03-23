@@ -11,10 +11,39 @@ provider:
   name: aws
   runtime: nodejs12.x
   stage: dev
-  region: us-east-2
+  region: eu-west-2
   apiGateway:
     shouldStartNameWithService: true
-  
+
+resources: # CloudFormation template syntax from here on.
+  Resources:
+    ProductionUsersTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ProductionUsersTable
+        AttributeDefinitions:
+          - AttributeName: chatroom
+            AttributeType: N
+          - AttributeName: nickname
+            AttributeType: S
+        KeySchema:
+          - AttributeName: chatroom
+            KeyType: HASH
+        GlobalSecondaryIndexes:
+          - IndexName: nickname
+            KeySchema:
+              - AttributeName: nickname
+                KeyType: HASH
+            Projection:
+              NonKeyAttributes:
+                - chatroom
+              ProjectionType: INCLUDE
+            ProvisionedThroughput:
+              ReadCapacityUnits: 1
+              WriteCapacityUnits: 1
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
 
 functions:
   processWebhook:

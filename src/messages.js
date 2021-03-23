@@ -1,9 +1,8 @@
 module.exports.adminHelp = 
 `
 Команды бота: 
-/send *roomid* your message - пересылает указанному пользователю сообщение от бота
-/console_log - показывает номер текущей комнаты
-/help - показывает набор доступных команд
+/send <chatroom_id> <message> - пересылает указанному пользователю сообщение от бота
+пример: send 123234345 TEST
 `
 
 module.exports.start = 
