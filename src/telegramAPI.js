@@ -10,10 +10,17 @@ const dynamoDB = require('./dynamoDB');
 const sendAdminMessage = (jsonText) => bot.sendMessage(ADMIN, JSON.stringify(jsonText, null, 2));
 
 module.exports.processChatroomMessage = (msg) => {
-  let groupMessage = msg.caption !== undefined ? msg.caption : msg.text;
+  let groupMessage = msg.caption ? msg.caption : msg.text;
+  if (groupMessage === undefined) {
+    return;
+  }
   const res = groupMessage.match(/@([A-Z0-9_]+)/i);
   if (res && typeof res[1] === 'string') {
     dynamoDB.getUserByChatroom(ADMIN).then((adminData) => {
+      if (adminData == undefined) {
+        sendAdminMessage('can not find the admin');
+        return;
+      }
       if (adminData.lastSentMessage != msg.message_id) {
         dynamoDB.setAdminLatestMessage(msg.message_id);
         dynamoDB
